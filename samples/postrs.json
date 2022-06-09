@@ -1,0 +1,54 @@
+{
+  "status": 200,
+  "message": "OK",
+  "devMessage": null,
+  "data": {
+    "id": 23,
+    "title": "title3",
+    "status": "PUBLISHED",
+    "slug": "title3",
+    "editorType": "MARKDOWN",
+    "updateTime": 1653476298055,
+    "createTime": 1653476298055,
+    "editTime": 1653476298055,
+    "metaKeywords": null,
+    "metaDescription": null,
+    "fullPath": "/archives/title3",
+    "summary": "summary",
+    "thumbnail": "",
+    "visits": 0,
+    "disallowComment": false,
+    "password": "",
+    "template": "",
+    "topPriority": 0,
+    "likes": 0,
+    "wordCount": 1,
+    "inProgress": false,
+    "originalContent": "originalContent",
+    "content": "Content",
+    "commentCount": 0,
+    "tagIds": [],
+    "tags": [],
+    "categoryIds": [
+      3
+    ],
+    "categories": [
+      {
+        "id": 3,
+        "name": "ææ¯åå®¢ç²¾é",
+        "slug": "techblog",
+        "description": "",
+        "thumbnail": "",
+        "parentId": 0,
+        "password": null,
+        "createTime": 1653474291524,
+        "fullPath": "/categories/techblog",
+        "priority": 1
+      }
+    ],
+    "metaIds": [],
+    "metas": [],
+    "formatContent": "Content",
+    "topped": false
+  }
+}
