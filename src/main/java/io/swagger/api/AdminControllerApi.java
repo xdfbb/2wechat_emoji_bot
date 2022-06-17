@@ -1,12 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.AuthToken;
-import io.swagger.model.BaseResponseOfstring;
-import io.swagger.model.EnvironmentDTO;
-import io.swagger.model.LoginParam;
-import io.swagger.model.LoginPreCheckDTO;
-import io.swagger.model.ResetPasswordParam;
-import io.swagger.model.ResetPasswordSendCodeParam;
+import io.swagger.model.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -77,7 +71,7 @@ public interface AdminControllerApi  {
         @ApiResponse(responseCode = "500", description = "The server has encountered a situation it doesn't know how to handle."),
         @ApiResponse(responseCode = "501", description = "The request method is not supported by the server and cannot be handled."),
         @ApiResponse(responseCode = "503", description = "The server is not ready to handle the request.") })
-    public AuthToken authUsingPOST(LoginParam body);
+    public AuthWrapper authUsingPOST(LoginParam body);
 
     /**
      * Gets environments info

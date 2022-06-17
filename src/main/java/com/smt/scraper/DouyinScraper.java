@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +49,7 @@ public class DouyinScraper extends FiveDoubleOneEightScraper {
             }
             logger.info("Max number of records retrieved, exiting the job at total count = {}", totalCount);
             totalCount = 0;
-            from = 0;
+            from = 1;
         } else {
             totalCount = 0;
             from = 0;

@@ -5,15 +5,11 @@
 package wiki.primo.reptile.infoq;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import com.smt.wechatemojibot.WechatEmojiBot;
+import io.swagger.api.AdminControllerApi;
 import io.swagger.api.PostControllerApi;
-import io.swagger.model.PostDetailVO;
-import io.swagger.model.PostParam;
+import io.swagger.model.*;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.alibaba.fastjson.JSON;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,11 +17,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.seimicrawler.xpath.JXDocument;
 import org.seimicrawler.xpath.JXNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import wiki.primo.reptile.util.ChromeOptionsUtils;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.ws.rs.core.MediaType;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -68,12 +65,19 @@ public class InfoQList {
             List providers = new ArrayList();
             providers.add(provider);
 
-            PostControllerApi api;
-            api = JAXRSClientFactory.create("https://jiaomao.solemountain.cn/", PostControllerApi.class, providers);
-            org.apache.cxf.jaxrs.client.Client client = WebClient.client(api)
-                    .accept("application/json").type("application/json")
-                    .header("Admin-Authorization", "eba5db828cb54ddfacf1c70ef9fa7958");
+            AdminControllerApi adminControllerApi = JAXRSClientFactory.create("https://jiaomao.solemountain.cn/", AdminControllerApi.class, providers);
+            WebClient.client(adminControllerApi).accept(MediaType.APPLICATION_JSON_TYPE);
 
+            LoginParam loginParam = new LoginParam();
+            loginParam.setUsername("xdfbb");
+            loginParam.setPassword("11291212Ee");
+
+            AuthWrapper authToken = adminControllerApi.authUsingPOST(loginParam);
+
+
+            PostControllerApi postControllerApi = JAXRSClientFactory.create("https://jiaomao.solemountain.cn/", PostControllerApi.class, providers);
+            WebClient.client(postControllerApi).header("ADMIN-Authorization",authToken.getAuthToken().getAccessToken());
+            WebClient.client(adminControllerApi).accept(MediaType.APPLICATION_JSON_TYPE);
 
             extracted(webDriver, By.xpath(InfoQBlog.URLS.substring(0, InfoQBlog.URLS.lastIndexOf("/"))));
             String pageSource = webDriver.getPageSource();
@@ -101,13 +105,13 @@ public class InfoQList {
                 post.setStatus(PostParam.StatusEnum.PUBLISHED);
                 post.setKeepRaw(true);
                 List<Integer> categoryIds = new ArrayList<>();
-                categoryIds.add(3);
+                categoryIds.add(9);
                 post.setCategoryIds(categoryIds);
                 List<Integer> tagIds = new ArrayList<>();
                 tagIds.add(2);
                 post.setTagIds(tagIds);
-                post.setSummary("summary");
-                PostDetailVO result = api.createByUsingPOST7(post, true);
+                post.setSummary(contentTitle);
+                PostDetailVO result = postControllerApi.createByUsingPOST7(post, true);
                 if (result != null && "400".equalsIgnoreCase(result.getStatus())) {
                     logger.error("ERROR CREATING CONTENT WITH : " + contentTitle);
                 }

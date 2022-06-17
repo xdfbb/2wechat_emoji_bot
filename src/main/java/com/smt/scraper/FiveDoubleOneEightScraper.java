@@ -1,14 +1,20 @@
 package com.smt.scraper;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.swagger.api.PostControllerApi;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class FiveDoubleOneEightScraper {
     Logger logger = LoggerFactory.getLogger(FiveDoubleOneEightScraper.class);
