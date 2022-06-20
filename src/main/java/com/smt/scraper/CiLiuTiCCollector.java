@@ -55,7 +55,7 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
     private String jiaoMaoUrl;
     @Value("${jiaomao.admin.user}")
     private String jiaoMaoAdminUser;
-    @Value("${jiaomao.api.password}")
+    @Value("${jiaomao.admin.password}")
     private String jiaoMaoAdminPassword;
     @Autowired
     CiLiuTiJpaRepository ciLiuTiJpaRepository;
@@ -64,6 +64,7 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
     PostControllerApi postControllerApi;
 
     @Scheduled(cron = "0 0 12 * * ?")
+    @PostConstruct
     //每天中午12点执行
     public void execute() {
 
@@ -147,7 +148,7 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
     @Transactional
     void addCiLiuTiAcc(List<CiLiuTiArticel> ciLiuTiArticels, String json) {
         CiLiuTiArticel ciLiuTiArticel = gson.fromJson(json, CiLiuTiArticel.class);
-        logger.info("Ci Liu Ti article Id: " + ciLiuTiArticel.getData_id());
+        logger.info("磁流体 article Id: " + ciLiuTiArticel.getData_id());
         CiLiuTiArticel ciLiuTiArticelFromDB = ciLiuTiJpaRepository.findByDataID(ciLiuTiArticel.getData_id());
         if (null == ciLiuTiArticelFromDB) {
             logger.info("find new article, adding record with article id " + ciLiuTiArticel.getData_id());
@@ -178,12 +179,13 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
         tagIds.add(3);
         post.setTagIds(tagIds);
         post.setSummary(contentTitle);
+        post.setCreateTime(ciLiuTiArticel.getPublish_time());
         try {
             PostDetailVO result = postControllerApi.createByUsingPOST7(post, true);
         } catch (BadRequestException ex) {
-            logger.error("ERROR CREATING CONTENT WITH : {}, the content might already exists.{}", contentTitle, ex);
+            logger.error("ERROR CREATING CONTENT WITH : {}, the content might already exists.{}", contentTitle, ex.toString());
         } catch (Exception ex) {
-            logger.error("ERROR CREATING CONTENT WITH : {}, {}", contentTitle, ex);
+            logger.error("ERROR CREATING CONTENT WITH : {}, {}", contentTitle, ex.toString());
         }
 
     }

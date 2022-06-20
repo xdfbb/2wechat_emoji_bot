@@ -37,6 +37,9 @@ public class PostDetailVO extends ResponseWrapper<PostDetailVO> {
     private String content = null;
 
     @Schema(description = "")
+    private String originalContentUrl = null;
+
+    @Schema(description = "")
     private Date createTime = null;
 
     @Schema(description = "")
@@ -44,6 +47,14 @@ public class PostDetailVO extends ResponseWrapper<PostDetailVO> {
 
     @Schema(description = "")
     private Date editTime = null;
+
+    public String getOriginalContentUrl() {
+        return originalContentUrl;
+    }
+
+    public void setOriginalContentUrl(String originalContentUrl) {
+        this.originalContentUrl = originalContentUrl;
+    }
 
     public enum EditorTypeEnum {
         MARKDOWN("MARKDOWN"),
