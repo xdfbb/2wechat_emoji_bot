@@ -28,10 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MediaType;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
@@ -153,7 +150,6 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
         if (null == ciLiuTiArticelFromDB) {
             logger.info("find new article, adding record with article id " + ciLiuTiArticel.getData_id());
             ciLiuTiJpaRepository.save(ciLiuTiArticel);
-
         } else {
             logger.info("find existing data id, update the entity for app with id " + ciLiuTiArticelFromDB.getData_id());
             BeanUtils.copyProperties(ciLiuTiArticel, ciLiuTiArticelFromDB, "id", "version", "dateCreated", "lastModified", "disabled", "deleted", "data_id");
@@ -180,6 +176,9 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
         post.setTagIds(tagIds);
         post.setSummary(contentTitle);
         post.setCreateTime(ciLiuTiArticel.getPublish_time());
+        Set imgStr = getImgStr(ciLiuTiArticel.getContent());
+        String imgUrl = getThumbnail(imgStr);
+        post.setThumbnail(imgUrl);
         try {
             PostDetailVO result = postControllerApi.createByUsingPOST7(post, true);
         } catch (BadRequestException ex) {
