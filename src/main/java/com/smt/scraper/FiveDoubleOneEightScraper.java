@@ -89,10 +89,10 @@ public abstract class FiveDoubleOneEightScraper {
                     }
                 } catch (Exception exception) {
                     logger.info("url checking failed", exception);
-                    return "https://jiaomao.solemountain.cn/upload/2022/06/jiaomao.png";
+                    return "";
                 }
             }
         }
-        return "https://jiaomao.solemountain.cn/upload/2022/06/jiaomao.png";
+        return "";
     }
 }
