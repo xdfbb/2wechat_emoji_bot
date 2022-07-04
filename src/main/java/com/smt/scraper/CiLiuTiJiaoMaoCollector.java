@@ -31,17 +31,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
-public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
-    private Logger logger = LoggerFactory.getLogger(CiLiuTiCCollector.class);
+public class CiLiuTiJiaoMaoCollector extends FiveDoubleOneEightScraper {
+    private Logger logger = LoggerFactory.getLogger(CiLiuTiJiaoMaoCollector.class);
     private List<CiLiuTiArticel> ciLiuTiArticels = new ArrayList<>();
     String ciLiuTiUrl = "http://apis.ciliuti.com/ciliuti";
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
     SimpleDateFormat paraFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    private String projectId="02b1cab2-94e9-ec11-8dbb-c81f66f777c4";
 
     @Value("${5118.api.auth}")
     private String apiAuthToken;
-    @Value("${5118.api.project.id}")
-    private String projectId;
     @Value("${5118.api.project.related_words}")
     private String relatedWords;
     @Value("${5118.ciLiuTi.max}")
@@ -61,7 +60,6 @@ public class CiLiuTiCCollector extends FiveDoubleOneEightScraper {
     PostControllerApi postControllerApi;
 
     @Scheduled(cron = "0 0 12 * * ?")
-    @PostConstruct
     //每天中午12点执行
     public void execute() {
 
