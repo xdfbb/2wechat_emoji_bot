@@ -63,6 +63,7 @@ public class CiLiuTiCarCollector extends FiveDoubleOneEightScraper {
     PostControllerApi postControllerApi;
 
     @Scheduled(cron = "0 0 13 * * ?")
+    @PostConstruct
     //每天中午13点执行
     public void execute() {
 

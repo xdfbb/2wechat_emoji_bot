@@ -24,6 +24,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MediaType;
 import java.text.SimpleDateFormat;
@@ -62,6 +63,7 @@ public class CiLiuTiHealthCollector extends FiveDoubleOneEightScraper {
     PostControllerApi postControllerApi;
 
     @Scheduled(cron = "0 0 14 * * ?")
+    @PostConstruct
     //每天下午14点执行
     public void execute() {
 

@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,6 +37,7 @@ public class DouyinScraper extends FiveDoubleOneEightScraper {
 
 
     @Scheduled(cron = "0 0 10 * * ?")
+    @PostConstruct
     //每天上午10点执行
     public void execute() {
         logger.info("Job douyin account scraper started at {}", formatter.format(Calendar.getInstance().getTime()));

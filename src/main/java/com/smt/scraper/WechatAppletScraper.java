@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +34,7 @@ public class WechatAppletScraper extends FiveDoubleOneEightScraper {
 
 
     @Scheduled(cron = "0 0 4 * * ?")
+    @PostConstruct
     //每天凌晨4点执行
     private void execute() {
         logger.info("Job wechat mini-program account scraper started at {}", formatter.format(Calendar.getInstance().getTime()));
